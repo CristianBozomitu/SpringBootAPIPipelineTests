@@ -5,7 +5,6 @@ import com.example.demo.Entity.Post;
 import com.example.demo.Repository.PostRepository;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import org.springframework.boot.autoconfigure.graphql.GraphQlProperties;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -27,7 +26,9 @@ public class PostController {
 
     @GetMapping()
     public ResponseEntity<ResponseTemplate<List<PostDto>>> getAll(){
+        System.out.println("Hello deployment! Fetching posts...");
         List<PostDto> dtoList = postRepository.getAll();
+        System.out.println("Here are your posts:");
         return ResponseEntity.ok(new ResponseTemplate<>(dtoList));
     }
 
