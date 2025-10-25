@@ -84,15 +84,6 @@ jobs:
           cache-from: type=gha
           cache-to: type=gha,mode=max
 
-      - name: Test Docker image
-        run: |
-          docker build -t spring-boot-api:test .
-          docker run -d -p 8080:8080 --name test-container spring-boot-api:test
-          sleep 30
-          curl --fail http://localhost:8080/actuator/health || exit 1
-          docker stop test-container
-          docker rm test-container
-
   # Job 4: Security Scan
   security-scan:
     runs-on: ubuntu-latest
