@@ -22,7 +22,7 @@ COPY src ./src
 RUN ./mvnw clean package -DskipTests
 
 # Stage 2: Runtime stage
-FROM eclipse-temurin:17-jre-alpine
+FROM eclipse-temurin:21-jre-alpine
 WORKDIR /app
 
 # Create a non-root user for security
