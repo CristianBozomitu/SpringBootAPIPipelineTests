@@ -19,7 +19,7 @@ public class PostController {
     private final PostRepository postRepository;
 
     @GetMapping("/{id}")
-    public ResponseEntity<ResponseTemplate<PostDto>> getById(@PathVariable Long id) {
+    public ResponseEntity<ResponseTemplate<PostDto>> getById(@PathVariable Long id) throws RuntimeException{
         PostDto dto = postRepository.getById(id);
         return ResponseEntity.ok(new ResponseTemplate<>(dto));
     }

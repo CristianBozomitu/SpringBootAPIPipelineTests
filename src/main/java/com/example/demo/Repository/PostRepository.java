@@ -6,20 +6,25 @@ import com.example.demo.Mapper.PostMapper;
 import com.example.demo.exception.NotFoundException;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.Objects;
 
-@AllArgsConstructor
-@RequiredArgsConstructor
 @Getter
+@Component
+@AllArgsConstructor
 public class PostRepository implements IRepository<PostDto> {
     private List<Post> Postlist;
+    private final PostsService postsService;
     private final PostMapper mapper;
 
     @Override
-    public PostDto getById(Long id) {
+    @Transactional
+    public PostDto getById(Long id) throws RuntimeException {
+        postsService.deleteById(1L);
         return Postlist.stream()
                 .filter(post -> post.getId().equals(id))
                 .findFirst()

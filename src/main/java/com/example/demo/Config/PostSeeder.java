@@ -2,7 +2,6 @@ package com.example.demo.Config;
 
 import com.example.demo.Entity.Post;
 import com.example.demo.Mapper.PostMapper;
-import com.example.demo.Repository.PostRepository;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -12,7 +11,7 @@ import java.util.List;
 @Configuration
 public class PostSeeder {
     @Bean
-    public PostRepository seedPosts(PostMapper mapper) {
+    public List<Post> seedPosts(PostMapper mapper) {
         Post post1 = Post.builder()
                 .id(1L)
                 .title("First Post")
@@ -30,6 +29,6 @@ public class PostSeeder {
                 .build();
 
         System.out.println("Seeding posts...");
-        return new PostRepository(new ArrayList<>(List.of(post1, post2, post3)), mapper);
+        return new ArrayList<>(List.of(post1, post2, post3));
     }
 }
