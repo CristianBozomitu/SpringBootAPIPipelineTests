@@ -10,37 +10,34 @@ services:
       - "8081:8081"
     environment:
       - SPRING_PROFILES_ACTIVE=prod
-      # Add your environment variables here
-      # - DATABASE_URL=jdbc:postgresql://db:5432/mydb
-      # - DATABASE_USERNAME=user
-      # - DATABASE_PASSWORD=password
+      - SPRING_DATASOURCE_URL=jdbc:mysql://mysql:3306/dev?allowPublicKeyRetrieval=true&useSSL=false
+      - SPRING_DATASOURCE_USERNAME=user
+      - SPRING_DATASOURCE_PASSWORD=password
     networks:
       - app-network
-    # Uncomment if you need a database
-    # depends_on:
-    #   - db
+    depends_on:
+      - mysql
     restart: unless-stopped
 
-  # Uncomment if you need a PostgreSQL database
-  # db:
-  #   image: postgres:15-alpine
-  #   container_name: postgres-db
-  #   environment:
-  #     - POSTGRES_DB=mydb
-  #     - POSTGRES_USER=user
-  #     - POSTGRES_PASSWORD=password
-  #   ports:
-  #     - "5432:5432"
-  #   volumes:
-  #     - postgres-data:/var/lib/postgresql/data
-  #   networks:
-  #     - app-network
-  #   restart: unless-stopped
+  mysql:
+    image: mysql:8.0
+    container_name: mysql-springboot
+    environment:
+      MYSQL_ROOT_PASSWORD: rootpassword
+      MYSQL_DATABASE: dev
+      MYSQL_USER: user
+      MYSQL_PASSWORD: password
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql-data:/var/lib/mysql
+    networks:
+      - app-network
+    restart: unless-stopped
 
 networks:
   app-network:
     driver: bridge
 
-# Uncomment if using database
-# volumes:
-#   postgres-data:
+volumes:
+  mysql-data:
