@@ -1,8 +1,6 @@
 package com.example.demo.Dto;
 
 import jakarta.validation.constraints.NotNull;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
@@ -10,7 +8,10 @@ import lombok.experimental.SuperBuilder;
 @SuperBuilder
 @Getter
 @NoArgsConstructor
-public class PostDto extends CreatePostDto {
+public class CreatePostDto {
     @NotNull
-    public Long id;
+    public String title;
+
+    @NotNull
+    public String content;
 }
