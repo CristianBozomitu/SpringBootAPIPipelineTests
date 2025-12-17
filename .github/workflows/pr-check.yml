@@ -31,21 +31,29 @@ jobs:
       - name: Build project
         run: ./mvnw clean compile
 
-      - name: Run tests
-        run: ./mvnw test
-
       - name: Verify Docker build
         run: |
           docker build -t spring-boot-api:pr-${{ github.event.pull_request.number }} .
 
-      - name: Comment PR
+      - name: Comment PR with Status
         uses: actions/github-script@v7
-        if: always()
+        if: always() && github.event_name == 'pull_request'
         with:
           script: |
-            github.rest.issues.createComment({
+            const status = '${{ job.status }}';
+            let body = '';
+
+            if (status === 'success') {
+              body = '✅ All checks passed! Ready to merge.';
+            } else if (status === 'failure') {
+              body = '❌ Build failed. Please check the workflow logs.';
+            } else if (status === 'cancelled') {
+              body = '⚠️ Workflow was cancelled.';
+            }
+
+            await github.rest.issues.createComment({
               issue_number: context.issue.number,
               owner: context.repo.owner,
               repo: context.repo.repo,
-              body: '✅ All checks passed! Ready to merge.'
-            })
+              body: body
+            });

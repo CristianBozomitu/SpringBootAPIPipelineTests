@@ -2,15 +2,12 @@ package com.example.demo.controller;
 
 import com.example.demo.Dto.CreatePostDto;
 import com.example.demo.Dto.PostDto;
-
 import com.example.demo.service.PostService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @RestController
 @RequestMapping("/api/v1/posts")

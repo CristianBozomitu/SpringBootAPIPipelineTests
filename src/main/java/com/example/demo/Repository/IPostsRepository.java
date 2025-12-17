@@ -10,8 +10,4 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface IPostsRepository extends JpaRepository<Post, Long> {
-    @Modifying
-    @Transactional
-    @Query("DELETE FROM Post p WHERE p.id = :id")
-    int deletePostById(@Param("id") Long id);
 }

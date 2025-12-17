@@ -10,27 +10,9 @@ services:
       - "8081:8081"
     environment:
       - SPRING_PROFILES_ACTIVE=prod
-      - SPRING_DATASOURCE_URL=jdbc:mysql://mysql:3306/dev?allowPublicKeyRetrieval=true&useSSL=false
-      - SPRING_DATASOURCE_USERNAME=user
-      - SPRING_DATASOURCE_PASSWORD=password
-    networks:
-      - app-network
-    depends_on:
-      - mysql
-    restart: unless-stopped
-
-  mysql:
-    image: mysql:8.0
-    container_name: mysql-springboot
-    environment:
-      MYSQL_ROOT_PASSWORD: rootpassword
-      MYSQL_DATABASE: dev
-      MYSQL_USER: user
-      MYSQL_PASSWORD: password
-    ports:
-      - "3306:3306"
-    volumes:
-      - mysql-data:/var/lib/mysql
+      - SPRING_DATASOURCE_URL=jdbc:mysql://mysql-30f9087-cristianbozomitu202-c787.f.aivencloud.com:11724/${DB_NAME}
+      - SPRING_DATASOURCE_USERNAME=${DB_USERNAME}
+      - SPRING_DATASOURCE_PASSWORD=${DB_PASSWORD}
     networks:
       - app-network
     restart: unless-stopped
@@ -38,6 +20,3 @@ services:
 networks:
   app-network:
     driver: bridge
-
-volumes:
-  mysql-data:

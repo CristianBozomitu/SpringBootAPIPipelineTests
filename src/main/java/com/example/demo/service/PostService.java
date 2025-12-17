@@ -31,12 +31,9 @@ public class PostService {
         return postMapper.toDto(post);
     }
 
-    @Transactional
     public void deletePost(Long id){
-        int deletedCount = postsRepository.deletePostById(id);
-        if(deletedCount == 0){
-            throw new NotFoundException("Post not found");
-        }
+        postsRepository.findById(id).orElseThrow(() -> new NotFoundException("Post not found"));
+        postsRepository.deleteById(id);
     }
 
     public void updatePost(PostDto postDto){
