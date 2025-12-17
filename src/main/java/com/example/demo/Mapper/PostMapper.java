@@ -1,5 +1,6 @@
 package com.example.demo.Mapper;
 
+import com.example.demo.Dto.CreatePostDto;
 import com.example.demo.Dto.PostDto;
 import com.example.demo.Entity.Post;
 import org.springframework.stereotype.Component;
@@ -14,9 +15,8 @@ public class PostMapper {
                 .build();
     }
 
-    public Post toEntity(PostDto postDto) {
+    public Post toEntity(CreatePostDto postDto) {
         return Post.builder()
-                .id(postDto.id)
                 .title(postDto.title)
                 .content(postDto.content)
                 .build();
