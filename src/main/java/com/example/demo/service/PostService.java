@@ -6,9 +6,11 @@ import com.example.demo.Entity.Post;
 import com.example.demo.Mapper.PostMapper;
 import com.example.demo.Repository.IPostsRepository;
 import com.example.demo.exception.NotFoundException;
-import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -24,6 +26,12 @@ public class PostService {
                         .content(post.getContent())
                         .build())
                 .orElseThrow(() -> new NotFoundException("Post not found"));
+    }
+
+    public List<PostDto> getPosts(){
+        return postsRepository.findAll().stream()
+                .map(postMapper::toDto)
+                .toList();
     }
 
     public PostDto createPost(CreatePostDto postDto) {

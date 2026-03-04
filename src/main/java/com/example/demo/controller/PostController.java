@@ -9,7 +9,10 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
+@CrossOrigin(origins = "*")
 @RequestMapping("/api/v1/posts")
 @RequiredArgsConstructor
 public class PostController {
@@ -23,13 +26,13 @@ public class PostController {
         return ResponseEntity.ok(new ResponseTemplate<>(dto));
     }
 
-//    @GetMapping()
-//    public ResponseEntity<ResponseTemplate<List<PostDto>>> getAll(){
-//        System.out.println("Hello deployment! Fetching posts...");
-//        List<PostDto> dtoList = postRepository.getAll();
-//        System.out.println("Here are your posts:");
-//        return ResponseEntity.ok(new ResponseTemplate<>(dtoList));
-//    }
+    @GetMapping()
+    public ResponseEntity<ResponseTemplate<List<PostDto>>> getAll(){
+        System.out.println("Hello deployment! Fetching posts...");
+        List<PostDto> dtoList = postService.getPosts();
+        System.out.println("Here are your posts:");
+        return ResponseEntity.ok(new ResponseTemplate<>(dtoList));
+    }
 
     @PostMapping()
     public ResponseEntity<ResponseTemplate<PostDto>> createPost(@RequestBody @Valid CreatePostDto postDto) {
