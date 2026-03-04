@@ -128,7 +128,8 @@ jobs:
             echo "Health check attempt $ATTEMPT/$MAX_ATTEMPTS..."
 
             HTTP_STATUS=$(curl -s -o /dev/null -w "%{http_code}" \
-              --max-time 10 \
+              --max-time 30 \
+              --connect-timeout 10 \
               "${{ secrets.RENDER_APP_URL }}/health")
 
             echo "Status: $HTTP_STATUS"
@@ -136,12 +137,16 @@ jobs:
             if [ "$HTTP_STATUS" = "200" ]; then
               echo "✅ App is live and healthy!"
               exit 0
+            elif [ "$HTTP_STATUS" = "000" ]; then
+              echo "⚠️ App not reachable yet, retrying in 15s..."
+            else
+              echo "⏳ Got status $HTTP_STATUS, retrying in 15s..."
             fi
 
             sleep 15
           done
 
-          echo "❌ Deployment timed out after $((MAX_ATTEMPTS * 15)) seconds"
+          echo "❌ Deployment timed out after $((60 + MAX_ATTEMPTS * 15)) seconds"
           exit 1
 
       - name: Notify deployment success
