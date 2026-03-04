@@ -28,7 +28,7 @@ public class PostController {
 
     @GetMapping()
     public ResponseEntity<ResponseTemplate<List<PostDto>>> getAll(){
-        System.out.println("Hello deployment! Fetching posts...");
+        System.out.println("Hello deployment! Fetching posts... again");
         List<PostDto> dtoList = postService.getPosts();
         System.out.println("Here are your posts:");
         return ResponseEntity.ok(new ResponseTemplate<>(dtoList));
